@@ -42,12 +42,12 @@ function ModalEditUser(props) {
         className="modal show"
         style={{ display: 'block', position: 'initial' }}
         >
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} backdrop='static' keyboard={false}>
             <Modal.Header closeButton>
             <Modal.Title>Edit a user</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <form className='body-add-new'>
+            <form className='body-edit-new'>
                 <div className="mb-3">
                     <label className="form-label">First name</label>
                     <input 
