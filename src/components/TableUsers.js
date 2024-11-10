@@ -3,6 +3,8 @@ import Table from 'react-bootstrap/Table';
 import { fetchAllUsers } from '../services/userService';
 import ReactPaginate from 'react-paginate';
 import ModalAddNew from './ModalAddNew';
+import ModalEditUser from './ModalEditUser';
+import _ from 'lodash';
 
 function TableUsers(props) {
 
@@ -10,9 +12,12 @@ function TableUsers(props) {
     const [totalUsers, setTotalUsers] = useState(0)
     const [totalPages, setTotalPages] = useState(0)
     const [isShowModalAddNew, setIsShowModalAddNew] = useState(false)
+    const [isShowModalEdit, setIsShowModalEdit] = useState(false)
+    const [dataUserEdit, setDataUserEdit] = useState({})
 
     const handleClose = () => {
         setIsShowModalAddNew(false)
+        setIsShowModalEdit(false)
     }
 
     const handleUpdateTable = (user) => {
@@ -35,6 +40,21 @@ function TableUsers(props) {
     const handlePageClick = (e) => {
         getUsers(+e.selected + 1)
     }
+
+    const handleEditUser = (user) => {
+        setDataUserEdit(user)
+        setIsShowModalEdit(true)
+    }
+
+    const handleEditUserFromModal = (user) => {
+        let cloneListUsers = _.cloneDeep(listUsers)
+        let index = listUsers.findIndex((item) => item.id === user.id)
+        cloneListUsers[index].first_name = user.first_name
+        cloneListUsers[index].last_name = user.last_name
+        cloneListUsers[index].email = user.email
+
+        setListUsers(cloneListUsers)
+    }
     return ( 
         <>
             <div className='my-3 add-new d-flex justify-content-between align-items-center'>
@@ -52,6 +72,7 @@ function TableUsers(props) {
                         <th>Email</th>
                         <th>First Name</th>
                         <th>Last Name</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,6 +84,10 @@ function TableUsers(props) {
                                     <td>{item.email}</td>
                                     <td>{item.first_name}</td>
                                     <td>{item.last_name}</td>
+                                    <td>
+                                        <button className='btn btn-warning me-3' onClick={() => handleEditUser(item)}>Edit</button>
+                                        <button className='btn btn-danger'>Delete</button>
+                                    </td>
                                 </tr>
                             )
                         })
@@ -89,7 +114,7 @@ function TableUsers(props) {
                 activeClassName='active'
             />
             <ModalAddNew handleUpdateTable={handleUpdateTable} show={isShowModalAddNew} handleClose={handleClose}/>
-
+            <ModalEditUser handleEditUserFromModal={handleEditUserFromModal} show={isShowModalEdit} dataUserEdit={dataUserEdit} handleClose={handleClose}/> 
         </>
      );
 }
