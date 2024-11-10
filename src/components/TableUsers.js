@@ -5,7 +5,8 @@ import ReactPaginate from 'react-paginate';
 import ModalAddNew from './ModalAddNew';
 import ModalEditUser from './ModalEditUser';
 import ModalComfirm from './ModalConfirm';
-import _, { filter } from 'lodash';
+import _, {  } from 'lodash';
+import './TableUser.scss'
 
 function TableUsers(props) {
 
@@ -17,6 +18,10 @@ function TableUsers(props) {
     const [dataUserEdit, setDataUserEdit] = useState({})
     const [isShowModalDelete, setIsShowModalDelete] = useState(false)
     const [dataUserDelete, setDataUserDelete] = useState({})
+
+    //true = asc, false = desc
+    const [sortBy, setSortBy] = useState(false)
+    const [sortField, setSortField] = useState("id")
 
     const handleClose = () => {
         setIsShowModalAddNew(false)
@@ -71,6 +76,13 @@ function TableUsers(props) {
         cloneListUsers = cloneListUsers.filter(item => item.id !== user.id)
         setListUsers(cloneListUsers)
     }
+    const handleSort = (sortField) => {
+        setSortBy(!sortBy)
+        setSortField(sortField)
+        let cloneListUsers = _.cloneDeep(listUsers)
+        cloneListUsers = _.orderBy(cloneListUsers, [sortField], [sortBy ? 'asc' : 'desc'])
+        setListUsers(cloneListUsers)
+    }
     return ( 
         <>
             <div className='my-3 add-new d-flex justify-content-between align-items-center'>
@@ -84,9 +96,24 @@ function TableUsers(props) {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>
+                            <div className='sort-header d-flex justify-content-between align-items-center cursor-pointer'>
+                                <span>ID</span> 
+                                <span>
+                                    <i className='fa fa-sort' 
+                                        onClick={() => {handleSort('id')}}></i>
+                                </span>
+                            </div>         
+                        </th>
                         <th>Email</th>
-                        <th>First Name</th>
+                        <th>
+                            <div className='sort-header d-flex justify-content-between align-items-center cursor-pointer'>
+                                <span>First Name</span>
+                                <span>
+                                    <i className='fa fa-sort' onClick={() => {handleSort('first_name')}}></i>
+                                </span>
+                            </div>
+                        </th>
                         <th>Last Name</th>
                         <th>Actions</th>
                     </tr>
