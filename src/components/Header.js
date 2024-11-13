@@ -3,12 +3,20 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import logoApp from '../assets/images/logo192.png'
-import { useLocation, NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useContext } from 'react';
+import { UserContext } from '../context/UserContext';
 
 function Header(props) {
 
-    let location = useLocation()
-
+    const {logout, user} = useContext(UserContext)
+    const navigate = useNavigate()
+    const handleLogout = () => {
+        logout()
+        navigate('/login')
+        toast.success("Logout success!")
+    }
     return ( 
         <>
             <Navbar expand="lg" className="bg-body-tertiary">
@@ -21,18 +29,24 @@ function Header(props) {
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        <NavLink to={'/'} className='nav-link'>Home</NavLink>
-                        <NavLink to={'/users'} className='nav-link'>Manage users</NavLink>
-                    </Nav>
-                    <Nav>
-                        <NavDropdown title="Settings" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/login">Login</NavDropdown.Item>
-                            <NavDropdown.Item href="/logout">
-                                Logout
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                    </Nav>
+                    {(user && user.auth || window.location.pathname === '/') && 
+                        <>
+                            <Nav className="me-auto">
+                                <NavLink to={'/'} className='nav-link'>Home</NavLink>
+                                <NavLink to={'/users'} className='nav-link'>Manage users</NavLink>
+                            </Nav>
+                            <Nav>
+                                { user && user.email && <span className='nav-link'>Welcome <b>{user.email}</b></span>}
+                                <NavDropdown title="Settings" id="basic-nav-dropdown">
+                                    {user && user.auth === true ? (<NavDropdown.Item onClick={handleLogout}>
+                                        Logout
+                                    </NavDropdown.Item>) : (<NavLink to={'/login'} className='dropdown-item'>Login</NavLink>)}
+                                    
+                                    
+                                </NavDropdown>
+                            </Nav>
+                        </>
+                    }
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

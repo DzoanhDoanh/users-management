@@ -11,3 +11,51 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.login-container{
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  .title{
+    text-align: center;
+    font-weight: 600;
+    padding-top: 30px;
+    font-size: 24px;
+  }
+  .box-input{
+    outline: none;
+    border: 1px solid #dedede;
+    margin-bottom: 10px;
+    background-color: #1618230f;
+    border-radius: 3px;
+    transition: .3s;
+
+    &:hover{
+      background-color: #dedede;
+    }
+  }
+  .btn-login{
+    border: none;
+    border-radius: 3px;
+    transition: .2s;
+    &.active{
+      background-color: #fe2c05;
+      color: white;
+    }
+  }
+  button[disabled=disabled], button:disabled{
+    cursor: not-allowed;
+  }
+  .back-btn{
+    cursor: pointer;
+
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+  .eye-icon{
+    top: 25%;
+    right: 20px;
+    cursor: pointer;
+  }
+}

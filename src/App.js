@@ -1,24 +1,28 @@
 import { Container } from 'react-bootstrap';
 import './App.scss';
 import Header from './components/Header';
-import TableUsers from './components/TableUsers';
 import { ToastContainer } from 'react-toastify';
-import {Routes, Route, Link} from 'react-router-dom';
-import Home from './components/Home';
+import { UserContext } from './context/UserContext';
+import { useContext, useEffect } from 'react';
+import AppRoutes from './routes/AppRoutes'
 
 
 function App() {
 
+  const { loginContext} = useContext(UserContext)
   
+  useEffect(() => {
+    if(localStorage.getItem("token")){
+      loginContext(localStorage.getItem('email'), localStorage.getItem('token'))
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <>
       <div className="app-container">
         <Header />
         <Container>
-          <Routes>
-            <Route path='/' element={<Home />}/>
-            <Route path='/users' element={<TableUsers />}/>
-          </Routes>
+          <AppRoutes />
         </Container>
       </div>
       <ToastContainer
