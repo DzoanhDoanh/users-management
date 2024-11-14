@@ -164,7 +164,7 @@ function TableUsers(props) {
     }
     return ( 
         <>
-            <div className='my-3 add-new d-flex justify-content-between align-items-center'>
+            <div className='my-3 add-new d-sm-flex justify-content-between align-items-center'>
                 <span> 
                     <b>
                         List users: 
@@ -181,58 +181,60 @@ function TableUsers(props) {
                         onClick={getUsersExport}
                         ><i className="fa-solid fa-download"></i> Export
                     </CSVLink>                
-                    <button className='btn btn-success' onClick={() => setIsShowModalAddNew(true)}>Add new user</button>
+                    <button className='btn btn-success' onClick={() => setIsShowModalAddNew(true)}>Add user</button>
                 </div> 
             </div>
-            <div className='col-4 my-3'>
+            <div className='col-12 col-sm-4 my-3'>
                 <input className='form-control' 
                         placeholder='Search user by email' 
                         onChange={(e) => handleSearch(e)}/>
             </div>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>
-                            <div className='sort-header d-flex justify-content-between align-items-center cursor-pointer'>
-                                <span>ID</span> 
-                                <span>
-                                    <i className='fa fa-sort' 
-                                        onClick={() => {handleSort('id')}}></i>
-                                </span>
-                            </div>         
-                        </th>
-                        <th>Email</th>
-                        <th>
-                            <div className='sort-header d-flex justify-content-between align-items-center cursor-pointer'>
-                                <span>First Name</span>
-                                <span>
-                                    <i className='fa fa-sort' onClick={() => {handleSort('first_name')}}></i>
-                                </span>
-                            </div>
-                        </th>
-                        <th>Last Name</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {listUsers && listUsers.length > 0 && 
-                        listUsers.map((item, index) => {
-                            return (
-                                <tr key={`users=${index}`}>
-                                    <td>{item.id}</td>
-                                    <td>{item.email}</td>
-                                    <td>{item.first_name}</td>
-                                    <td>{item.last_name}</td>
-                                    <td>
-                                        <button className='btn btn-warning me-3' onClick={() => handleEditUser(item)}>Edit</button>
-                                        <button className='btn btn-danger' onClick={() => handleDeleteUser(item)}>Delete</button>
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </Table>
+            <div className='' style={{overflow: 'auto'}}>
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>
+                                <div className='sort-header d-flex justify-content-between align-items-center cursor-pointer'>
+                                    <span>ID</span> 
+                                    <span>
+                                        <i className='fa fa-sort' 
+                                            onClick={() => {handleSort('id')}}></i>
+                                    </span>
+                                </div>         
+                            </th>
+                            <th>Email</th>
+                            <th>
+                                <div className='sort-header d-flex justify-content-between align-items-center cursor-pointer'>
+                                    <span>First Name</span>
+                                    <span>
+                                        <i className='fa fa-sort' onClick={() => {handleSort('first_name')}}></i>
+                                    </span>
+                                </div>
+                            </th>
+                            <th>Last Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {listUsers && listUsers.length > 0 && 
+                            listUsers.map((item, index) => {
+                                return (
+                                    <tr key={`users=${index}`}>
+                                        <td>{item.id}</td>
+                                        <td>{item.email}</td>
+                                        <td>{item.first_name}</td>
+                                        <td>{item.last_name}</td>
+                                        <td>
+                                            <button className='btn btn-warning me-3' onClick={() => handleEditUser(item)}>Edit</button>
+                                            <button className='btn btn-danger' onClick={() => handleDeleteUser(item)}>Delete</button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </Table>
+            </div>
             <ReactPaginate
                 breakLabel="..."
                 nextLabel="next >"

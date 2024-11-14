@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-operators */
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -36,7 +37,7 @@ function Header(props) {
                                 <NavLink to={'/users'} className='nav-link'>Manage users</NavLink>
                             </Nav>
                             <Nav>
-                                { user && user.email && <span className='nav-link'>Welcome <b>{user.email}</b></span>}
+                                { user && user.email && <span className='nav-link'>Welcome <span className='fw-bold text-black'>{user.email}</span></span>}
                                 <NavDropdown title="Settings" id="basic-nav-dropdown">
                                     {user && user.auth === true ? (<NavDropdown.Item onClick={handleLogout}>
                                         Logout
