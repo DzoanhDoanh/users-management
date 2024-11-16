@@ -1,36 +1,27 @@
-import { useContext, useState } from "react";
-import { loginApi } from "../services/userService";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
+import { handleLoginRedux } from "../redux/actions/userAction";
+import { useDispatch, useSelector } from "react-redux";
 function Login() {
 
-    const {loginContext} = useContext(UserContext)
+    const dispatch = useDispatch()
 
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [isShowPass, setIsShowPass] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const loading = useSelector(state => state.user.isLoading)
+    const account = useSelector(state => state.user.account)
 
     const handleLogin = async() => {
         if(!email || !password){
             toast.error("Email/Password is required!")
             return
         }
-        setLoading(true)
-        let res = await loginApi(email.trim(), password.trim())
-        if(res && res.token){
-            loginContext(email, res.token)
-            navigate('/')
-            
-        }
-        else{
-            if(res && res.status === 400){
-                toast.error(res.data.error)
-            }
-        }
-        setLoading(false)
+        
+        dispatch(handleLoginRedux(email, password))
+      
     }
 
     const handleGoBack = () => {
@@ -42,6 +33,13 @@ function Login() {
             handleLogin()
         }
     }
+
+    useEffect(() => {
+        if(account && account.auth === true){
+            navigate('/')
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [account])
     return ( 
         <div className="login-container col-12 col-sm-4 ">
             <div className="title">Login</div>

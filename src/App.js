@@ -2,19 +2,18 @@ import { Container } from 'react-bootstrap';
 import './App.scss';
 import Header from './components/Header';
 import { ToastContainer } from 'react-toastify';
-import { UserContext } from './context/UserContext';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import AppRoutes from './routes/AppRoutes'
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { handleRefresh } from './redux/actions/userAction';
 
 function App() {
 
-  const dataUserRedux = useSelector((state) => state.user.account)
-  const { loginContext} = useContext(UserContext)
-  console.log(dataUserRedux)
+  const dispatch = useDispatch()
   useEffect(() => {
     if(localStorage.getItem("token")){
-      loginContext(localStorage.getItem('email'), localStorage.getItem('token'))
+      dispatch(handleRefresh())
+
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
