@@ -20,7 +20,7 @@ function Header(props) {
     }
     return ( 
         <>
-            <Navbar expand="lg" className="bg-body-tertiary">
+            <Navbar expand="lg" className="bg-body-tertiary bg-light">
                 <Container>
                     <Navbar.Brand href="/">
                         <img src={logoApp} width="30" height={'30'} className='d-inline-block align-top me-1' alt='Logo'/> 
