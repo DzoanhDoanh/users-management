@@ -1,14 +1,14 @@
 Website features
 
-🔑 Login: Secure user login system.
-🔓 Logout: Log out safely.
-➕ Add User: Easily add new users to the system.
-✏️ Update User: Edit user information effortlessly.
-🗑️ Delete User: Remove unwanted users from the database.
-📋 Display List Users: View a comprehensive list of all users.
-🔍 Search by Email: Quickly find users by their email addresses.
-↕️ Sort by Firstname: Sort users alphabetically.
-📤 Export List: Export the user list to a CSV file.
+🔑 Login: Secure user login system.\
+🔓 Logout: Log out safely.\
+➕ Add User: Easily add new users to the system.\
+✏️ Update User: Edit user information effortlessly.\
+🗑️ Delete User: Remove unwanted users from the database.\
+📋 Display List Users: View a comprehensive list of all users.\
+🔍 Search by Email: Quickly find users by their email addresses.\
+↕️ Sort by Firstname: Sort users alphabetically.\
+📤 Export List: Export the user list to a CSV file.\
 📱 Responsive Design: Access the website on any device.
 
 # Getting Started with Create React App
